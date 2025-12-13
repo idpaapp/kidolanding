@@ -31,22 +31,16 @@ export function HeroSection({ data }: HeroSectionProps) {
     { src: '/res/photo_8.jpg', alt: 'فعالیت‌های گروهی', rotate: 6, x: '77%', y: '30%', size: 'w-34 h-46', z: 13 },
   ];
 
-  // Decorative elements for background - more elements, visible in hero section
+  // Decorative elements for background - reduced by 50% for performance
   const decorativeElements = [
-    // Clouds - Hero section (0-100%)
+    // Clouds - Hero section (0-100%) - 6 instead of 12
     { type: 'cloud', x: '5%', y: '8%', size: 'w-24 h-18 md:w-32 md:h-24', color: 'pastel-pink', rotate: 0, scale: [1, 1.2, 1] },
     { type: 'cloud', x: '85%', y: '12%', size: 'w-28 h-20 md:w-36 md:h-26', color: 'pastel-blue', rotate: 5, scale: [1, 1.15, 1] },
     { type: 'cloud', x: '15%', y: '65%', size: 'w-22 h-16 md:w-30 md:h-22', color: 'pastel-yellow', rotate: -3, scale: [1, 1.1, 1] },
     { type: 'cloud', x: '75%', y: '75%', size: 'w-20 h-15 md:w-28 md:h-20', color: 'pastel-purple', rotate: 8, scale: [1, 1.25, 1] },
     { type: 'cloud', x: '50%', y: '3%', size: 'w-18 h-14 md:w-24 md:h-18', color: 'pastel-cyan', rotate: -5, scale: [1, 1.18, 1] },
     { type: 'cloud', x: '30%', y: '55%', size: 'w-24 h-18 md:w-32 md:h-24', color: 'pastel-orange', rotate: 3, scale: [1, 1.2, 1] },
-    { type: 'cloud', x: '90%', y: '45%', size: 'w-26 h-19 md:w-34 md:h-25', color: 'pastel-green', rotate: -8, scale: [1, 1.15, 1] },
-    { type: 'cloud', x: '8%', y: '35%', size: 'w-20 h-15 md:w-28 md:h-20', color: 'pastel-pink', rotate: 10, scale: [1, 1.2, 1] },
-    { type: 'cloud', x: '60%', y: '25%', size: 'w-22 h-16 md:w-30 md:h-22', color: 'pastel-blue', rotate: -5, scale: [1, 1.15, 1] },
-    { type: 'cloud', x: '40%', y: '85%', size: 'w-18 h-14 md:w-26 md:h-19', color: 'pastel-yellow', rotate: 7, scale: [1, 1.1, 1] },
-    { type: 'cloud', x: '70%', y: '5%', size: 'w-20 h-15 md:w-28 md:h-20', color: 'pastel-purple', rotate: -7, scale: [1, 1.2, 1] },
-    { type: 'cloud', x: '25%', y: '18%', size: 'w-22 h-16 md:w-30 md:h-22', color: 'pastel-cyan', rotate: 12, scale: [1, 1.18, 1] },
-    // Stars - Hero section (0-100%)
+    // Stars - Hero section (0-100%) - 7 instead of 15
     { type: 'star', x: '12%', y: '22%', size: 'w-12 h-12 md:w-16 md:h-16', color: 'pastel-yellow', rotate: 15, scale: [1, 1.3, 1] },
     { type: 'star', x: '72%', y: '28%', size: 'w-10 h-10 md:w-14 md:h-14', color: 'pastel-pink', rotate: 30, scale: [1, 1.25, 1] },
     { type: 'star', x: '28%', y: '82%', size: 'w-14 h-14 md:w-18 md:h-18', color: 'pastel-orange', rotate: 45, scale: [1, 1.35, 1] },
@@ -54,13 +48,6 @@ export function HeroSection({ data }: HeroSectionProps) {
     { type: 'star', x: '48%', y: '18%', size: 'w-13 h-13 md:w-17 md:h-17', color: 'pastel-cyan', rotate: 60, scale: [1, 1.28, 1] },
     { type: 'star', x: '62%', y: '72%', size: 'w-12 h-12 md:w-16 md:h-16', color: 'pastel-blue', rotate: 25, scale: [1, 1.22, 1] },
     { type: 'star', x: '22%', y: '38%', size: 'w-10 h-10 md:w-14 md:h-14', color: 'pastel-green', rotate: 40, scale: [1, 1.3, 1] },
-    { type: 'star', x: '88%', y: '52%', size: 'w-11 h-11 md:w-15 md:h-15', color: 'pastel-yellow', rotate: 50, scale: [1, 1.25, 1] },
-    { type: 'star', x: '18%', y: '58%', size: 'w-12 h-12 md:w-16 md:h-16', color: 'pastel-pink', rotate: 35, scale: [1, 1.3, 1] },
-    { type: 'star', x: '68%', y: '15%', size: 'w-13 h-13 md:w-17 md:h-17', color: 'pastel-orange', rotate: 55, scale: [1, 1.28, 1] },
-    { type: 'star', x: '35%', y: '42%', size: 'w-10 h-10 md:w-14 md:h-14', color: 'pastel-blue', rotate: 28, scale: [1, 1.25, 1] },
-    { type: 'star', x: '55%', y: '68%', size: 'w-11 h-11 md:w-15 md:h-15', color: 'pastel-purple', rotate: 38, scale: [1, 1.22, 1] },
-    { type: 'star', x: '78%', y: '38%', size: 'w-12 h-12 md:w-16 md:h-16', color: 'pastel-cyan', rotate: 42, scale: [1, 1.3, 1] },
-    { type: 'star', x: '45%', y: '88%', size: 'w-10 h-10 md:w-14 md:h-14', color: 'pastel-green', rotate: 32, scale: [1, 1.25, 1] },
     // Balloons - Hero section
     { type: 'balloon', x: '12%', y: '30%', size: 'w-16 h-20 md:w-20 md:h-24', color: 'pastel-pink', rotate: -10, scale: [1, 1.15, 1] },
     { type: 'balloon', x: '88%', y: '25%', size: 'w-14 h-18 md:w-18 md:h-22', color: 'pastel-blue', rotate: 8, scale: [1, 1.2, 1] },
@@ -72,13 +59,9 @@ export function HeroSection({ data }: HeroSectionProps) {
     { type: 'bear', x: '85%', y: '60%', size: 'w-18 h-22 md:w-24 md:h-28', color: 'pastel-pink', rotate: 8, scale: [1, 1.12, 1] },
     { type: 'bear', x: '35%', y: '20%', size: 'w-16 h-20 md:w-22 md:h-26', color: 'pastel-yellow', rotate: -3, scale: [1, 1.1, 1] },
     { type: 'bear', x: '65%', y: '75%', size: 'w-20 h-24 md:w-26 md:h-30', color: 'pastel-purple', rotate: 10, scale: [1, 1.15, 1] },
-    // More elements for rest of page
+    // More elements for rest of page - reduced
     { type: 'cloud', x: '10%', y: '120%', size: 'w-18 h-14 md:w-24 md:h-18', color: 'pastel-pink', rotate: 10, scale: [1, 1.2, 1] },
-    { type: 'cloud', x: '80%', y: '150%', size: 'w-20 h-15 md:w-28 md:h-20', color: 'pastel-blue', rotate: -5, scale: [1, 1.15, 1] },
     { type: 'star', x: '90%', y: '110%', size: 'w-9 h-9 md:w-13 md:h-13', color: 'pastel-yellow', rotate: 50, scale: [1, 1.25, 1] },
-    { type: 'star', x: '15%', y: '180%', size: 'w-10 h-10 md:w-14 md:h-14', color: 'pastel-pink', rotate: 35, scale: [1, 1.3, 1] },
-    { type: 'balloon', x: '25%', y: '130%', size: 'w-16 h-20 md:w-20 md:h-24', color: 'pastel-pink', rotate: -10, scale: [1, 1.15, 1] },
-    { type: 'bear', x: '70%', y: '200%', size: 'w-18 h-22 md:w-24 md:h-28', color: 'pastel-blue', rotate: 8, scale: [1, 1.12, 1] },
   ];
 
   const getColorClass = (color: string) => {
