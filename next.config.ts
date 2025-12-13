@@ -9,6 +9,19 @@ const config: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-src 'self' https://*.kidoban.ir http://*.kidoban.ir; frame-ancestors 'self' https://*.kidoban.ir http://*.kidoban.ir;",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default config;
