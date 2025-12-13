@@ -118,7 +118,6 @@ export function FeaturesSection({ data }: FeaturesSectionProps) {
                       width="28" 
                       height="28" 
                       viewBox="0 0 2.54 2.54" 
-                      style={{ enableBackground: 'new 0 0 512 512' }}
                       fillRule="evenodd"
                     >
                       <g>
