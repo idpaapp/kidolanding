@@ -16,7 +16,7 @@ const config: NextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "frame-ancestors 'self' https://*.kidoban.ir http://*.kidoban.ir https://kidoban.ir http://kidoban.ir;",
+            value: "frame-ancestors *;",
           },
         ],
       },
