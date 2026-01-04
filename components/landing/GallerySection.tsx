@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Play } from 'lucide-react';
@@ -23,89 +23,119 @@ interface VideoThumbnailProps {
   onSelect: () => void;
 }
 
-function VideoThumbnail({ item, size, sizeClasses, index, onSelect }: VideoThumbnailProps) {
+const VideoThumbnail = memo(function VideoThumbnail({ item, size, sizeClasses, index, onSelect }: VideoThumbnailProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const [isInView, setIsInView] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Intersection Observer - فقط وقتی در viewport است thumbnail بساز
   useEffect(() => {
-    if (item.type === 'video' && videoRef.current) {
-      const video = videoRef.current;
-      
-      const handleLoadedMetadata = () => {
-        // برو به وسط ویدیو
-        if (video.duration && video.duration > 0) {
-          video.currentTime = video.duration / 2;
-        } else {
-          // اگر duration در دسترس نبود، به 1 ثانیه برو
-          video.currentTime = 1;
-        }
-      };
+    if (item.type !== 'video' || !containerRef.current) return;
 
-      const handleSeeked = () => {
-        // وقتی به موقعیت رسید، فریم را بگیر
-        if (canvasRef.current && video) {
-          const canvas = canvasRef.current;
-          const ctx = canvas.getContext('2d');
-          if (ctx && video.videoWidth > 0 && video.videoHeight > 0) {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const url = canvas.toDataURL('image/jpeg', 0.8);
-            setThumbnailUrl(url);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isInView && !isLoading) {
+            setIsInView(true);
+            setIsLoading(true);
           }
-        }
-      };
+        });
+      },
+      { rootMargin: '50px' } // 50px قبل از رسیدن به viewport شروع کن
+    );
 
-      const handleCanPlay = () => {
-        // وقتی ویدیو آماده پخش است
-        if (video.duration && video.duration > 0) {
-          video.currentTime = video.duration / 2;
-        } else {
-          video.currentTime = 1;
-        }
-      };
+    observer.observe(containerRef.current);
 
-      video.addEventListener('loadedmetadata', handleLoadedMetadata);
-      video.addEventListener('canplay', handleCanPlay);
-      video.addEventListener('seeked', handleSeeked);
-      video.addEventListener('loadeddata', handleCanPlay);
+    return () => {
+      observer.disconnect();
+    };
+  }, [item.type, isInView, isLoading]);
 
-      // اگر metadata قبلاً لود شده بود
-      if (video.readyState >= 1) {
-        handleCanPlay();
+  // فقط وقتی در viewport است thumbnail بساز
+  useEffect(() => {
+    if (item.type !== 'video' || !isInView || !videoRef.current || isLoading) return;
+
+    const video = videoRef.current;
+    let isCancelled = false;
+    
+    const handleLoadedMetadata = () => {
+      if (isCancelled) return;
+      // برو به وسط ویدیو
+      if (video.duration && video.duration > 0) {
+        video.currentTime = video.duration / 2;
+      } else {
+        video.currentTime = 1;
       }
+    };
 
-      return () => {
-        video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-        video.removeEventListener('canplay', handleCanPlay);
-        video.removeEventListener('seeked', handleSeeked);
-        video.removeEventListener('loadeddata', handleCanPlay);
-      };
+    const handleSeeked = () => {
+      if (isCancelled || !canvasRef.current) return;
+      // وقتی به موقعیت رسید، فریم را بگیر
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      if (ctx && video.videoWidth > 0 && video.videoHeight > 0) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const url = canvas.toDataURL('image/jpeg', 0.7); // کیفیت کمتر برای سرعت بیشتر
+        setThumbnailUrl(url);
+        setIsLoading(false);
+      }
+    };
+
+    const handleCanPlay = () => {
+      if (isCancelled) return;
+      if (video.duration && video.duration > 0) {
+        video.currentTime = video.duration / 2;
+      } else {
+        video.currentTime = 1;
+      }
+    };
+
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('seeked', handleSeeked);
+    video.addEventListener('loadeddata', handleCanPlay);
+
+    if (video.readyState >= 1) {
+      handleCanPlay();
     }
-  }, [item.type, item.src]);
+
+    return () => {
+      isCancelled = true;
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('seeked', handleSeeked);
+      video.removeEventListener('loadeddata', handleCanPlay);
+    };
+  }, [item.type, item.src, isInView, isLoading]);
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
+      ref={containerRef}
+      initial={{ opacity: 0, scale: 0.98 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      whileHover={{ scale: 1.05 }}
-      className={`relative ${sizeClasses[size]} rounded-2xl overflow-hidden cursor-pointer group shadow-lg hover:shadow-xl transition-all aspect-square`}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, delay: Math.min(index * 0.02, 0.1), ease: [0.25, 0.1, 0.25, 1] }}
+      className={`relative ${sizeClasses[size]} rounded-2xl overflow-hidden cursor-pointer group shadow-lg hover:shadow-xl transition-shadow aspect-square`}
       onClick={onSelect}
     >
       {item.type === 'video' ? (
         <>
-          <video
-            ref={videoRef}
-            src={item.src}
-            className="hidden"
-            muted
-            playsInline
-            preload="metadata"
-            crossOrigin="anonymous"
-          />
+          {isInView && (
+            <video
+              ref={videoRef}
+              src={item.src}
+              className="hidden"
+              muted
+              playsInline
+              preload="metadata"
+              crossOrigin="anonymous"
+            />
+          )}
           <canvas ref={canvasRef} className="hidden" />
           {thumbnailUrl ? (
             <Image
@@ -114,6 +144,7 @@ function VideoThumbnail({ item, size, sizeClasses, index, onSelect }: VideoThumb
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-110"
               unoptimized
+              priority={index < 4}
             />
           ) : (
             <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -127,7 +158,8 @@ function VideoThumbnail({ item, size, sizeClasses, index, onSelect }: VideoThumb
           alt={item.title || 'گالری'}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-110"
-          loading="lazy"
+          loading={index < 4 ? "eager" : "lazy"}
+          priority={index < 4}
         />
       )}
 
@@ -148,7 +180,7 @@ function VideoThumbnail({ item, size, sizeClasses, index, onSelect }: VideoThumb
       </div>
     </motion.div>
   );
-}
+});
 
 export function GallerySection({ data }: GallerySectionProps) {
   const [filter, setFilter] = useState<FilterType>('all');
@@ -158,24 +190,27 @@ export function GallerySection({ data }: GallerySectionProps) {
     type: 'image' | 'video';
   } | null>(null);
 
-  const filters = [
+  const filters = useMemo(() => [
     { label: 'همه', value: 'all' as FilterType },
     { label: 'تصاویر', value: 'image' as FilterType },
     { label: 'ویدیوها', value: 'video' as FilterType },
-  ];
+  ], []);
 
-  const filteredItems = data.gallery.filter(
-    (item) => filter === 'all' || item.type === filter
+  const filteredItems = useMemo(() => 
+    data.gallery.filter(
+      (item) => filter === 'all' || item.type === filter
+    ),
+    [data.gallery, filter]
   );
 
   return (
     <section id="gallery" className="py-20 md:py-24 bg-gradient-to-b from-white via-pastel-pink/15 to-white">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           className="text-center mb-12"
         >
           <h2 className="text-2xl md:text-5xl font-bold text-gray-800 mb-3 md:mb-4">

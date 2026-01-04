@@ -11,18 +11,30 @@ const borderColors = {
   yellow: 'border-pastel-yellow',
   cyan: 'border-pastel-cyan',
   pink: 'border-pastel-pink',
+  green: 'border-pastel-green',
+  purple: 'border-pastel-purple',
+  orange: 'border-primary-orange',
+  blue: 'border-pastel-blue',
 };
 
 const borderColorsVibrant = {
   yellow: '#FACC15', // زرد پررنگ
   cyan: '#06B6D4', // فیروزه‌ای پررنگ
   pink: '#F97316', // نارنجی/صورتی پررنگ
+  green: '#10B981', // سبز پررنگ
+  purple: '#8B5CF6', // بنفش پررنگ
+  orange: '#F97316', // نارنجی پررنگ
+  blue: '#3B82F6', // آبی پررنگ
 };
 
 const checkmarkCircleColors = {
   yellow: '#FACC15', // زرد پررنگ
   cyan: '#06B6D4', // فیروزه‌ای پررنگ
   pink: '#F97316', // نارنجی/صورتی پررنگ
+  green: '#10B981', // سبز پررنگ
+  purple: '#8B5CF6', // بنفش پررنگ
+  orange: '#F97316', // نارنجی پررنگ
+  blue: '#3B82F6', // آبی پررنگ
 };
 
 export function FeaturesSection({ data }: FeaturesSectionProps) {
@@ -82,10 +94,10 @@ export function FeaturesSection({ data }: FeaturesSectionProps) {
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           className="text-center mb-12"
         >
           <h2 className="text-2xl md:text-5xl font-bold text-gray-800 mb-3 md:mb-4">
@@ -94,17 +106,16 @@ export function FeaturesSection({ data }: FeaturesSectionProps) {
           <p className="text-base md:text-xl text-gray-600">آنچه ما ارائه می‌دهیم</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {data.features.map((feature, index) => {
             return (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-2xl p-3 md:p-4 shadow-md hover:shadow-lg transition-all"
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, delay: Math.min(index * 0.03, 0.15), ease: [0.25, 0.1, 0.25, 1] }}
+                className="bg-white rounded-2xl p-3 md:p-4 shadow-md hover:shadow-lg transition-shadow"
               >
                 {/* Inner Card with Dashed Border */}
                 <div className="bg-white rounded-xl p-4 md:p-6 border-2 border-dashed relative h-full"

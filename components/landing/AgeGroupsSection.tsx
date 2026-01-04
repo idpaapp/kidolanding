@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Baby, Sparkles, GraduationCap, BookOpen, School } from 'lucide-react';
+import { Baby, Baby as Toddler, Users, BookOpen, GraduationCap } from 'lucide-react';
 import type { KindergartenLanding } from '@/lib/kindergarten-data';
 
 interface AgeGroupsSectionProps {
@@ -9,11 +9,11 @@ interface AgeGroupsSectionProps {
 }
 
 const iconMap = {
-  pink: Baby,
-  yellow: Sparkles,
-  green: GraduationCap,
-  blue: BookOpen,
-  purple: School,
+  pink: Baby,        // شیرخوار - Baby icon
+  yellow: Toddler,  // نوپا - Baby/Toddler icon
+  green: Users,      // کودکستان - Users/Group icon
+  blue: BookOpen,    // پیش دبستان ۱ - Book icon
+  purple: GraduationCap, // پیش دبستان ۲ - Graduation cap
 };
 
 const colorClasses = {
@@ -29,16 +29,21 @@ export function AgeGroupsSection({ data }: AgeGroupsSectionProps) {
     <section id="age-groups" className="py-20 md:py-24 bg-gradient-to-b from-pastel-red/40 via-pastel-red/50 to-pastel-red/40">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           className="text-center mb-12"
         >
           <h2 className="text-2xl md:text-5xl font-bold text-gray-800 mb-3 md:mb-4">
             گروه‌های سنی
           </h2>
-          <p className="text-base md:text-xl text-gray-600">انتخاب مناسب برای هر سن</p>
+          <p className="text-sm md:text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            هر کودک در هر سن نیازهای خاص خود را دارد. ما با برنامه‌ریزی دقیق و تخصصی برای هر گروه سنی، 
+            محیطی مناسب و امن فراهم کرده‌ایم که در آن کودکان بتوانند با توجه به سن و توانایی‌هایشان 
+            رشد کنند و مهارت‌های لازم را کسب نمایند. از مراقبت ویژه برای شیرخواران تا آماده‌سازی کامل 
+            برای ورود به دبستان، ما در کنار فرزندان شما هستیم.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -47,19 +52,29 @@ export function AgeGroupsSection({ data }: AgeGroupsSectionProps) {
             return (
               <motion.div
                 key={group.name}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -8, scale: 1.05 }}
-                className={`${colorClasses[group.color]} rounded-2xl md:rounded-3xl p-4 md:p-6 border-2 cursor-pointer transition-all shadow-md hover:shadow-xl`}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, delay: Math.min(index * 0.03, 0.15), ease: [0.25, 0.1, 0.25, 1] }}
+                className={`${colorClasses[group.color]} rounded-2xl md:rounded-3xl p-4 md:p-6 border-2 cursor-pointer transition-shadow shadow-md hover:shadow-xl relative overflow-hidden group`}
               >
-                <Icon className="w-8 h-8 md:w-12 md:h-12 mb-3 md:mb-4 mx-auto" />
-                <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2 text-center">{group.name}</h3>
-                <p className="text-xs md:text-sm text-center mb-1 md:mb-2 font-medium">{group.ageRange}</p>
-                {group.description && (
-                  <p className="text-xs text-center opacity-80">{group.description}</p>
-                )}
+                {/* Decorative gradient background */}
+                <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${colorClasses[group.color].split(' ')[0]}/20 rounded-full blur-2xl group-hover:opacity-30 transition-opacity`} />
+                
+                <div className="relative z-10">
+                  {/* Icon with background circle */}
+                  <div className="flex justify-center mb-4">
+                    <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/80 flex items-center justify-center shadow-lg`}>
+                      <Icon className="w-8 h-8 md:w-10 md:h-10 text-gray-800" />
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-base md:text-xl font-bold mb-2 text-center text-gray-800">{group.name}</h3>
+                  <p className="text-xs md:text-sm text-center mb-2 font-semibold text-gray-700">{group.ageRange}</p>
+                  {group.description && (
+                    <p className="text-xs md:text-sm text-center text-gray-600 leading-relaxed">{group.description}</p>
+                  )}
+                </div>
               </motion.div>
             );
           })}
