@@ -5,6 +5,7 @@ import { HeroSection } from '@/components/landing/HeroSection';
 import { AboutSection } from '@/components/landing/AboutSection';
 import { AgeGroupsSection } from '@/components/landing/AgeGroupsSection';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
+import { SpecialServicesSection } from '@/components/landing/SpecialServicesSection';
 import { ExtraClassesSection } from '@/components/landing/ExtraClassesSection';
 import { GallerySection } from '@/components/landing/GallerySection';
 import { TestimonialsSection } from '@/components/landing/TestimonialsSection';
@@ -53,6 +54,7 @@ export default async function LandingPage({ params }: PageProps) {
       <AboutSection data={data} />
       <AgeGroupsSection data={data} />
       <FeaturesSection data={data} />
+      <SpecialServicesSection data={data} />
       <ExtraClassesSection data={data} />
       <GallerySection data={data} />
       <TestimonialsSection data={data} />

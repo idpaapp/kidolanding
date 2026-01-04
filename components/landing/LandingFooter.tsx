@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowUp, Instagram } from 'lucide-react';
+import { ArrowUp, Instagram, MessageCircle } from 'lucide-react';
 import type { KindergartenLanding } from '@/lib/kindergarten-data';
 
 interface LandingFooterProps {
@@ -80,7 +80,7 @@ export function LandingFooter({ data }: LandingFooterProps) {
           {/* Contact Info */}
           <div>
             <h4 className="text-lg font-bold mb-4">اطلاعات تماس</h4>
-            <ul className="space-y-2 text-white/80 text-sm">
+            <ul className="space-y-2 text-white/80 text-sm mb-4">
               <li>{data.address}</li>
               <li>
                 <a href={`tel:${data.phone}`} className="hover:text-white transition-colors">
@@ -90,6 +90,16 @@ export function LandingFooter({ data }: LandingFooterProps) {
               <li>{data.workingDays}</li>
               <li>{data.workingHours}</li>
             </ul>
+            {/* WhatsApp Button */}
+            <a
+              href={`https://wa.me/${data.phone.replace(/[^0-9]/g, '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm"
+            >
+              <MessageCircle className="w-5 h-5" />
+              ارتباط در واتساپ
+            </a>
           </div>
 
           {/* Social Links */}

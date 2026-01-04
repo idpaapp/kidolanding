@@ -1,3 +1,11 @@
+import servicesDataRaw from './services-data.json';
+
+const servicesData = servicesDataRaw as {
+  specialServices: SpecialService[];
+  supplementaryClasses: SpecialService[];
+  extraClasses: ExtraClass[];
+};
+
 export interface AgeGroup {
   name: string;
   ageRange: string;
@@ -7,17 +15,30 @@ export interface AgeGroup {
 }
 
 export interface ExtraClass {
+  id: string;
   name: string;
   description: string;
+  longDescription: string; // دو پاراگراف
   icon: 'Swords' | 'Music' | 'Languages';
   gradient: string;
+  gallery: string[]; // آرایه تصاویر گالری
 }
 
 export interface Feature {
   title: string;
   description: string;
   icon: string;
-  color: 'yellow' | 'cyan' | 'pink';
+  color: 'yellow' | 'cyan' | 'pink' | 'green' | 'purple' | 'orange' | 'blue';
+}
+
+export interface SpecialService {
+  id: string;
+  title: string;
+  description: string;
+  longDescription: string; // دو پاراگراف
+  icon: 'Handshake' | 'Sparkles' | 'Target' | 'Languages' | 'Palette' | 'Activity' | 'Music' | 'Scissors' | 'BookOpen' | 'Film' | 'Mic' | 'Puzzle';
+  iconColor: string;
+  gallery: string[]; // آرایه تصاویر گالری
 }
 
 export interface GalleryItem {
@@ -59,6 +80,8 @@ export interface KindergartenLanding {
   ageGroups: AgeGroup[];
   extraClasses: ExtraClass[];
   features: Feature[];
+  specialServices: SpecialService[];
+  supplementaryClasses: SpecialService[];
   gallery: GalleryItem[];
   testimonials: Testimonial[];
   socialLinks: SocialLinks;
@@ -107,46 +130,47 @@ export const idehKindergarten: KindergartenLanding = {
       description: 'آماده‌سازی کامل برای دبستان',
     },
   ],
-  extraClasses: [
-    {
-      name: 'نینجا',
-      description: 'ورزش و تربیت بدنی',
-      icon: 'Swords',
-      gradient: 'from-red-500 to-orange-500',
-    },
-    {
-      name: 'موسیقی',
-      description: 'آموزش موسیقی کودک',
-      icon: 'Music',
-      gradient: 'from-purple-500 to-pink-500',
-    },
-    {
-      name: 'زبان انگلیسی',
-      description: 'آموزش زبان با بازی',
-      icon: 'Languages',
-      gradient: 'from-blue-500 to-cyan-500',
-    },
-  ],
+  extraClasses: servicesData.extraClasses as ExtraClass[],
   features: [
     {
       title: 'فضای آموزشی مدرن',
       description: 'کلاس‌های مجهز و محیطی امن برای یادگیری',
       icon: 'School',
-      color: 'yellow',
+      color: 'blue',
     },
     {
       title: 'مربیان مجرب و مهربان',
       description: 'تیم متخصص با تجربه در آموزش کودکان',
       icon: 'Users',
-      color: 'cyan',
+      color: 'purple',
     },
     {
       title: 'تغذیه سالم و بهداشتی',
       description: 'غذای تازه و سالم برای رشد کودکان',
       icon: 'Apple',
+      color: 'green',
+    },
+    {
+      title: 'پروژه آموزشی',
+      description: 'برنامه‌های آموزشی منظم و هدفمند',
+      icon: 'Book',
+      color: 'orange',
+    },
+    {
+      title: 'ناهار',
+      description: 'غذای گرم و سالم برای کودکان',
+      icon: 'Utensils',
       color: 'pink',
     },
+    {
+      title: 'صبحانه',
+      description: 'صبحانه مقوی و انرژی‌بخش',
+      icon: 'Coffee',
+      color: 'yellow',
+    },
   ],
+  specialServices: servicesData.specialServices as SpecialService[],
+  supplementaryClasses: servicesData.supplementaryClasses as SpecialService[],
   gallery: [
     {
       id: '1',

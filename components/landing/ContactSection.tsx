@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Phone, MapPin, Clock, ExternalLink } from 'lucide-react';
+import { Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import type { KindergartenLanding } from '@/lib/kindergarten-data';
 
@@ -74,13 +74,13 @@ export function ContactSection({ data }: ContactSectionProps) {
               </div>
 
               <a
-                href={data.platformUrl}
+                href={`https://wa.me/${data.phone.replace(/[^0-9]/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary-orange text-white px-5 py-2.5 md:px-6 md:py-3 rounded-full text-sm md:text-base font-bold hover:bg-primary-orange-dark transition-colors mt-4"
+                className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 md:px-6 md:py-3 rounded-full text-sm md:text-base font-bold transition-colors mt-4"
               >
-                ورود به پلتفرم کیدوبان
-                <ExternalLink className="w-5 h-5" />
+                <MessageCircle className="w-5 h-5" />
+                ارتباط در واتساپ
               </a>
             </div>
           </motion.div>
