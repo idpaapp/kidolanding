@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
+import { buildWhatsAppUrl, toPersianDigits } from '@/lib/seo';
 import type { KindergartenLanding } from '@/lib/kindergarten-data';
 
 interface ContactSectionProps {
@@ -45,8 +46,9 @@ export function ContactSection({ data }: ContactSectionProps) {
                   <a
                     href={`tel:${data.phone}`}
                     className="text-sm md:text-base text-gray-700 hover:text-gray-900 transition-colors"
+                    dir="ltr"
                   >
-                    {data.phone}
+                    {toPersianDigits(data.phone)}
                   </a>
                 </div>
               </div>
@@ -74,7 +76,7 @@ export function ContactSection({ data }: ContactSectionProps) {
               </div>
 
               <a
-                href={`https://wa.me/${data.phone.replace(/[^0-9]/g, '')}`}
+                href={buildWhatsAppUrl(data.phone)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 md:px-6 md:py-3 rounded-full text-sm md:text-base font-bold transition-colors mt-4"

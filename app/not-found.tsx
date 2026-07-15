@@ -11,7 +11,7 @@ export default function NotFound() {
           href="/"
           className="bg-primary-orange text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-orange-dark transition-colors"
         >
-          بازگشت به صفحه اصلی
+          بازگشت به مهد ایده
         </Link>
       </div>
     </div>

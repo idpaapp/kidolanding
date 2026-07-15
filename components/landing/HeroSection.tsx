@@ -138,7 +138,12 @@ export function HeroSection({ data }: HeroSectionProps) {
               transition={{ duration: 0.4, delay: 0.2 }}
               className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold text-gray-900 mb-4 md:mb-6 leading-tight"
             >
-              به خانواده <span className="text-primary-orange">ایده</span> خوش آمدید
+              <span className="sr-only">{data.name} — </span>
+              مهد کودک و پیش‌دبستانی{' '}
+              <span className="text-primary-orange">ایده</span>
+              <span className="block text-xl md:text-2xl lg:text-3xl font-bold text-gray-700 mt-3 md:mt-4">
+                شهرآرا · گیشا · تهران
+              </span>
             </motion.h1>
 
             <motion.p
@@ -147,7 +152,7 @@ export function HeroSection({ data }: HeroSectionProps) {
               transition={{ duration: 0.4, delay: 0.3 }}
               className="text-lg md:text-xl lg:text-2xl text-gray-700 mb-8 md:mb-10 leading-relaxed font-medium"
             >
-              {data.tagline}
+              {data.tagline} — بهترین مهدکودک منطقه شهرآرا با مربیان مجرب و فضای آموزشی مدرن
             </motion.p>
 
             {/* CTA Buttons - Hidden on mobile, shown on desktop */}

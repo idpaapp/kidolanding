@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { toPersianDigits } from '@/lib/seo';
 import type { KindergartenLanding } from '@/lib/kindergarten-data';
 
 interface AboutSectionProps {
@@ -47,10 +48,10 @@ export function AboutSection({ data }: AboutSectionProps) {
           className="text-center mb-12"
         >
           <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-3 md:mb-4">
-            درباره ما
+            درباره مهد کودک و پیش‌دبستانی ایده
           </h2>
           <p className="text-sm md:text-lg text-gray-600 max-w-2xl mx-auto">
-            مرکز آموزشی مدرن و پویا با فضایی شاد و خلاق برای رشد و یادگیری کودکان
+            مهدکودک و پیش‌دبستانی معتبر در شهرآرا (گیشا) — مرکز آموزشی مدرن با فضایی شاد و خلاق
           </p>
         </motion.div>
 
@@ -62,8 +63,11 @@ export function AboutSection({ data }: AboutSectionProps) {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-pastel-purple/40 rounded-2xl md:rounded-3xl p-4 md:p-8 md:px-12 shadow-lg"
           >
+            <p className="text-sm md:text-lg text-gray-700 leading-relaxed mb-4">
+              <strong>مهد کودک و پیش دبستانی ایده</strong> در محله <strong>گیشا</strong>، منطقه <strong>شهرآرا</strong> تهران، به عنوان یکی از معتبرترین مهدکودک‌های منطقه، فضایی شاد، امن و خلاق برای کودکان ۳ ماه تا ۶ سال فراهم می‌آورد. با استفاده از روش‌های آموزشی نوین و معلمان مجرب، کودکان در محیطی حمایت‌گر به یادگیری و رشد می‌پردازند.
+            </p>
             <p className="text-sm md:text-lg text-gray-700 leading-relaxed">
-              کودکستان و پیش دبستانی ایده در گیشا به عنوان یک مرکز آموزشی مدرن و پویا، فضایی شاد و خلاق برای کودکان فراهم می‌آورد. با استفاده از روش‌های آموزشی نوین و معلمان مجرب، کودکان در محیطی امن و حمایت‌گر به یادگیری و رشد می‌پردازند. فعالیت‌های متنوعی نظیر بازی‌های آموزشی، کارگاه‌های هنری و ورزشی، و برنامه‌های فرهنگی در این مرکز برگزار می‌شود تا کودکان استعدادهای خود را کشف و پرورش دهند.
+              فعالیت‌های متنوعی نظیر کلاس زبان انگلیسی، نینجا، موسیقی، بازی هدفمند، کارگاه‌های هنری و ورزشی در مهد ایده برگزار می‌شود. اگر به دنبال <strong>بهترین مهدکودک شهرآرا</strong> یا <strong>پیش دبستانی گیشا</strong> هستید، مهد ایده با صبحانه و ناهار سالم، فضای آموزشی مدرن و کلاس‌های تخصصی، انتخابی مطمئن برای خانواده‌هاست. برای بازدید و ثبت‌نام با شماره {toPersianDigits(data.phone)} تماس بگیرید.
             </p>
           </motion.div>
         </div>

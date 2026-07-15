@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowUp, Instagram, MessageCircle } from 'lucide-react';
+import { buildWhatsAppUrl, toPersianDigits } from '@/lib/seo';
 import type { KindergartenLanding } from '@/lib/kindergarten-data';
 
 interface LandingFooterProps {
@@ -70,6 +71,11 @@ export function LandingFooter({ data }: LandingFooterProps) {
                 </a>
               </li>
               <li>
+                <a href="#faq" className="text-white/80 hover:text-white transition-colors">
+                  سوالات متداول
+                </a>
+              </li>
+              <li>
                 <a href="#contact" className="text-white/80 hover:text-white transition-colors">
                   تماس
                 </a>
@@ -83,8 +89,8 @@ export function LandingFooter({ data }: LandingFooterProps) {
             <ul className="space-y-2 text-white/80 text-sm mb-4">
               <li>{data.address}</li>
               <li>
-                <a href={`tel:${data.phone}`} className="hover:text-white transition-colors">
-                  {data.phone}
+                <a href={`tel:${data.phone}`} className="hover:text-white transition-colors" dir="ltr">
+                  {toPersianDigits(data.phone)}
                 </a>
               </li>
               <li>{data.workingDays}</li>
@@ -92,7 +98,7 @@ export function LandingFooter({ data }: LandingFooterProps) {
             </ul>
             {/* WhatsApp Button */}
             <a
-              href={`https://wa.me/${data.phone.replace(/[^0-9]/g, '')}`}
+              href={buildWhatsAppUrl(data.phone)}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm"

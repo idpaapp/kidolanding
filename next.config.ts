@@ -16,6 +16,15 @@ const config: NextConfig = {
   // Performance optimizations
   compress: true,
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: '/ideh',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
@@ -23,7 +32,24 @@ const config: NextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "frame-ancestors *;",
+            value: 'frame-ancestors *;',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+        ],
+      },
+      {
+        source: '/(.*\\.(?:jpg|jpeg|png|gif|webp|avif|svg|ico|woff2?))',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },

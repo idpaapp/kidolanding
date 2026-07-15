@@ -67,7 +67,6 @@ export interface SocialLinks {
 }
 
 export interface KindergartenLanding {
-  slug: string;
   name: string;
   tagline: string;
   logo: string;
@@ -88,7 +87,6 @@ export interface KindergartenLanding {
 }
 
 export const idehKindergarten: KindergartenLanding = {
-  slug: 'ideh',
   name: 'مهد کودک و پیش دبستانی ایده',
   tagline: 'جایی که کودکان با عشق رشد می‌کنند',
   logo: '/images/landing/ideh/logo.png',
@@ -288,10 +286,7 @@ export const idehKindergarten: KindergartenLanding = {
   },
 };
 
-export function getKindergartenBySlug(slug: string): KindergartenLanding | null {
-  if (slug === 'ideh') {
-    return idehKindergarten;
-  }
-  return null;
+export function getKindergartenData(): KindergartenLanding {
+  return idehKindergarten;
 }
 
